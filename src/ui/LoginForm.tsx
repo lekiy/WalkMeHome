@@ -1,13 +1,11 @@
-import { useCallback, useState } from 'react'
-import '../App.css'
-import { Button, TextField, Typography } from '@mui/material'
-import Grid from '@mui/material/Unstable_Grid2/Grid2'
-import { Navigate, Route } from 'react-router-dom';
-import { useLocalStorage } from 'usehooks-ts';
+import { Button, Grid, TextField } from "@mui/material";
+import { useState, useCallback } from "react";
+import { useLocalStorage } from "usehooks-ts";
 
-function Login() {
 
-  const [formData, setFormData] = useState({"name": "", "email": ""});
+function LoginForm() {
+
+    const [formData, setFormData] = useState({"name": "", "email": ""});
 
   const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn', false);
 
@@ -42,32 +40,25 @@ function Login() {
     }
   };
 
+  const handleLogout = useCallback(() => {
+    setLoggedIn(false);
+}, [setLoggedIn]);
+
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(async (event) => {
     event.preventDefault();
     handleLogin(formData.name, formData.email);
   }, [formData, handleLogin]);
-  
 
-  return (
-    <>
-        {loggedIn && <Navigate to='/' />}
-        <Typography variant='h1'>Walk Me Home</Typography>
-        <form onSubmit={handleFormSubmit}>
-      <Grid container>
-        <Grid xs={6}>
-            <TextField name="name" label="Name" onChange={handleFormChange}>{formData.name}</TextField>
-        </Grid>
-        <Grid xs={6}>
-            <TextField name="email" label="Email" onChange={handleFormChange}>{formData.email}</TextField>
-        </Grid>
-        <Grid xs={12}>
-            <Button type="submit" color="success" variant="contained">Login</Button>
-        </Grid>
-      </Grid>
-        </form>
-    </>
-  )
+
+    return (<>{
+        loggedIn && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
+        {!loggedIn && <form onSubmit={handleFormSubmit}>
+          <TextField name="name" label="Name" variant="outlined" onChange={handleFormChange}>{formData.name}</TextField>
+          <TextField name="email" label="Email" variant="outlined" onChange={handleFormChange}>{formData.email}</TextField>
+          <Button type="submit" color="inherit">Login</Button>
+        </form>}
+    </>)
 }
 
-export default Login
+export default LoginForm;

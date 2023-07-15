@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Login from './ui/Login.tsx'
+import Landing from './ui/Landing.tsx'
 import Home from './ui/Home.tsx'
-import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 
@@ -12,8 +11,8 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path:'/login',
-    element: <Login />,
+    path:'/landing',
+    element: <Landing />,
   }
 ])
 

@@ -16,3 +16,5 @@ const useGetDogBreeds = async () => {
 
     return response;
   };
+
+  export default useGetDogBreeds;
