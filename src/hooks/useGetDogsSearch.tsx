@@ -8,19 +8,21 @@ export interface SearchResponse {
   prev: string;
 }
 
-interface GetDogSearch<T> {
-  data: T | null;
+interface GetDogSearch<SearchResponse> {
+  data: SearchResponse | null;
   loading: boolean;
   error: Error | null;
 }
 
-function useGetDogSearch(): GetDogSearch<SearchResponse> {
+function useGetDogSearch(filterBreeds: string[]): GetDogSearch<SearchResponse> {
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
-    const url = 'https://frontend-take-home-service.fetch.com/dogs/search';
+    const filterBreedsString = filterBreeds?.length > 0 ? '&breeds='+filterBreeds.join('&breeds=') : '';
+
+    const url = 'https://frontend-take-home-service.fetch.com/dogs/search?size=25&from=25'+filterBreedsString;
 
     useEffect(() => {
       const fetchData = async () => {

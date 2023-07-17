@@ -9,11 +9,10 @@ function Landing() {
 
 
   const [loggedIn] = useLocalStorage('loggedIn', false);
-  
 
   return (
     <>
-        {loggedIn && <Navigate to='/' />}
+        {/* {loggedIn && <Navigate to='/' />} */}
         <Navbar />
         <Typography variant='h1'>Walk Me Home</Typography>
         <LoginForm />

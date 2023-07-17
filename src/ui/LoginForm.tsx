@@ -1,13 +1,14 @@
 import { Button, Grid, TextField } from "@mui/material";
 import { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 
 
 function LoginForm() {
 
-    const [formData, setFormData] = useState({"name": "", "email": ""});
-
+  const [formData, setFormData] = useState({"name": "", "email": ""});
   const [loggedIn, setLoggedIn] = useLocalStorage('loggedIn', false);
+  const navigate = useNavigate();
 
 
   const handleFormChange: React.ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
@@ -35,6 +36,7 @@ function LoginForm() {
     if (response.ok) {
       const result = await response;
       setLoggedIn(true);
+      navigate('/');
     } else {
       console.error('Login failed');
     }
