@@ -12,6 +12,7 @@ function Home() {
 
   const [breedFilter, setBreedFilter] = useState<string[]>([]);
   const [page, setPage] = useState<number>(0);
+  const [sortAscending, setSortAscending] = useState<boolean>(true);
 
   const nextPage = useCallback(() => {
     setPage((page) => page + 1);
@@ -21,12 +22,20 @@ function Home() {
     setPage((page) => page - 1);
   }, []);
 
-  const updateBreedFilter = useCallback((filters: string[]) => {
+  const handleBreedFilterChange = useCallback((filters: string[]) => {
     setBreedFilter(filters);
     setPage(0);
   }, []);
 
-  const { data, loading, error } = useGetDogs(breedFilter, page);
+  const handleSortOrderToggle = useCallback(() => {
+    setSortAscending((sortAscending) => !sortAscending);
+  }, []);
+
+  const { data, loading, error, total } = useGetDogs(
+    breedFilter,
+    page,
+    sortAscending ? "asc" : "desc"
+  );
 
   if (!data) {
     return null;
@@ -45,9 +54,22 @@ function Home() {
         >
           Back
         </Button>
-        <BreedSelector setFilters={updateBreedFilter} />
-        <Button variant="contained" color="primary" onClick={nextPage}>
+        <BreedSelector setFilters={handleBreedFilterChange} />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={nextPage}
+          disabled={page >= Math.floor(total / 25)}
+        >
           Next
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSortOrderToggle}
+        >
+          {" "}
+          Sort{" "}
         </Button>
       </Toolbar>
       <DogGrid dogs={data} />

@@ -13,24 +13,36 @@ interface GetDogs<Dog> {
   data: Dog | null;
   loading: boolean;
   error: Error | null;
+  total: number;
 }
 
-function useGetDogs(filterBreeds: string[], pageIndex: number): GetDogs<Dog[]> {
+function useGetDogs(
+  filterBreeds: string[],
+  pageIndex: number,
+  sortOrder: string
+): GetDogs<Dog[]> {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [total, setTotal] = useState(0);
 
   const baseUrl = "https://frontend-take-home-service.fetch.com/dogs";
 
-  const pageGroupString = "?size=25&from=" + pageIndex * 25; // multiply the inde by 25 to for each page
+  const pageGroupString = "?size=25&from=" + pageIndex * 25; // multiply the index by 25 to for each page
 
   const filterBreedsString =
     filterBreeds?.length > 0 ? "&breeds=" + filterBreeds.join("&breeds=") : "";
 
+  const sortOrderString = "&sort=breed:" + sortOrder;
+
   useEffect(() => {
     const fetchData = async () => {
       const searchRequest = await fetch(
-        baseUrl + "/search" + pageGroupString + filterBreedsString,
+        baseUrl +
+          "/search" +
+          pageGroupString +
+          filterBreedsString +
+          sortOrderString,
         {
           method: "GET",
           credentials: "include",
@@ -53,14 +65,15 @@ function useGetDogs(filterBreeds: string[], pageIndex: number): GetDogs<Dog[]> {
       } else {
         const jsonData = await response.json();
         setData(jsonData);
+        setTotal(searchResponse.total);
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [baseUrl, filterBreedsString, pageIndex]);
+  }, [baseUrl, filterBreedsString, pageIndex, sortOrder]);
 
-  return { data, loading, error };
+  return { data, loading, error, total };
 }
 
 export default useGetDogs;
