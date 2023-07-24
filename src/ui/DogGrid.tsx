@@ -9,6 +9,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 import { Dog } from "../hooks/useGetDogs";
 import React, { useCallback, useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 
 type DogGridProps = {
   dogs: Dog[];
@@ -22,32 +23,36 @@ const DogGrid: React.FC<DogGridProps> = ({ dogs }) => {
           dogs.map((dog: any) => {
             return (
               <Grid key={dog.id} xs={2}>
-                <Card
-                  sx={[
-                    {
-                      "&:hover": {
-                        transition: "transform 0.2s ease-in-out",
-                        transform: "scale(1.1)",
+                <Link to={`/dogs/${dog.id}`}>
+                  <Card
+                    sx={[
+                      {
+                        "&:hover": {
+                          transition: "transform 0.2s ease-in-out",
+                          transform: "scale(1.1)",
+                        },
                       },
-                    },
-                  ]}
-                >
-                  <CardMedia sx={{ height: 200 }} image={dog.img} />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="div"
-                      align="center"
-                    >
-                      {dog.name}
-                    </Typography>
-                  </CardContent>
-                </Card>
+                    ]}
+                  >
+                    <CardMedia sx={{ height: 200 }} image={dog.img} />
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        align="center"
+                      >
+                        {dog.name}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
               </Grid>
             );
           })}
       </Grid>
+
+      <Outlet />
     </Container>
   );
 };
