@@ -6,6 +6,7 @@ import { useLocalStorage } from "usehooks-ts";
 function LoginForm() {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn", false);
+  const [loginTime, setLoginTime] = useLocalStorage("loginTime", 0);
   const navigate = useNavigate();
 
   const handleFormChange: React.ChangeEventHandler<HTMLInputElement> =
@@ -36,6 +37,7 @@ function LoginForm() {
     if (response.ok) {
       const result = await response;
       setLoggedIn(true);
+      setLoginTime(Date.now());
       navigate("/");
     } else {
       console.error("Login failed");

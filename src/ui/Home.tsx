@@ -4,11 +4,12 @@ import Navbar from "./Navbar";
 import DogGrid from "./DogGrid";
 import useGetDogs from "../hooks/useGetDogs";
 import BreedSelector from "./BreedSelector";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Toolbar } from "@mui/material";
 
 function Home() {
-  const [loggedIn] = useLocalStorage("loggedIn", false);
+  const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn", false);
+  const [loginTime] = useLocalStorage("loginTime", 0);
 
   const [breedFilter, setBreedFilter] = useState<string[]>([]);
   const [page, setPage] = useState<number>(0);
@@ -37,13 +38,28 @@ function Home() {
     sortAscending ? "asc" : "desc"
   );
 
+  console.log("rendering home");
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (loginTime + 6000000 < Date.now()) {
+        // 6000000ms = 1 hour
+        setLoggedIn(false);
+      }
+      console.log("checking login");
+    }, 600000); // 600000ms = 10 minutes
+
+    return () => clearInterval(intervalId);
+  }, [loginTime, setLoggedIn]);
+
+  if (!loggedIn) return <Navigate to="/landing" />;
+
   if (!data) {
     return null;
   }
 
   return (
     <>
-      {!loggedIn && <Navigate to="/landing" />}
       <Navbar />
       <Toolbar>
         <Button
