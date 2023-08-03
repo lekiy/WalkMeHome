@@ -4,6 +4,7 @@ import { useLocalStorage } from "usehooks-ts";
 import LoginForm from "./LoginForm";
 import Navbar from "./Navbar";
 import useGetDogBreeds from "../hooks/useGetDogBreeds";
+import DogCarousel from "./DogCarousel";
 
 function Landing() {
   const [loggedIn] = useLocalStorage("loggedIn", false);
@@ -21,8 +22,12 @@ function Landing() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
+      <Typography variant="h3">Welcome to</Typography>
       <Typography variant="h1">Walk Me Home</Typography>
+      <Typography>Let us find you the newest member of your family</Typography>
+
+      <DogCarousel />
       <LoginForm />
     </>
   );
