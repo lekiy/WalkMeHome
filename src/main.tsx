@@ -4,6 +4,8 @@ import Landing from "./ui/Landing.tsx";
 import Home from "./ui/Home.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import DogComponent from "./ui/DogComponent.tsx";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./Theme.tsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    {/* <ThemeProvider theme={theme}> */}
     <RouterProvider router={router} />
+    {/* </ThemeProvider> */}
   </React.StrictMode>
 );

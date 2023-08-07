@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardActionArea,
   CardActions,
@@ -38,12 +39,12 @@ const DogComponent: React.FC = () => {
     <Modal open>
       <Grow in style={style}>
         <Card
-          sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
+          sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" } }}
         >
           <CardMedia
             sx={{
-              height: { xs: 200, sm: 300, md: 400 },
-              width: { xs: 200, sm: 300, md: 400 },
+              width: { xs: 250, sm: 250, md: 400 },
+              height: { xs: 200, sm: 250, md: 400 },
               padding: 2,
             }}
             image={dogData.img}
@@ -52,8 +53,9 @@ const DogComponent: React.FC = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              height: { xs: 200, sm: 300, md: 400 },
-              width: { xs: 200, sm: 300, md: 400 },
+              overflow: "scroll",
+              width: { xs: 250, sm: 250, md: 400 },
+              height: { xs: 200, sm: 250, md: 400 },
             }}
           >
             <Typography
@@ -82,7 +84,13 @@ const DogComponent: React.FC = () => {
             </Typography>
             {!loading && data && data[0] && (
               <MapContainer
-                style={{ height: "50%", width: "75%", margin: "auto" }}
+                style={{
+                  minWidth: "200px",
+                  minHeight: "200px",
+                  maxHeight: "50%",
+                  maxWidth: "75%",
+                  margin: "auto",
+                }}
                 center={[data[0].latitude, data[0].longitude]}
                 zoom={13}
                 scrollWheelZoom={false}
@@ -99,19 +107,19 @@ const DogComponent: React.FC = () => {
               </MapContainer>
             )}
           </CardContent>
-          <CardActions
-            sx={{
-              alignItems: "flex-start",
-              flexDirection: { xs: "row-reverse", md: "column" },
-              order: { xs: -1, md: 1 },
-            }}
+          <Box
+            position={"absolute"}
+            right={0}
+            borderRadius={"100%"}
+            bgcolor={"white"}
+            margin={1}
           >
             <Link to={`/`}>
               <IconButton>
                 <CloseIcon />
               </IconButton>
             </Link>
-          </CardActions>
+          </Box>
         </Card>
       </Grow>
     </Modal>
