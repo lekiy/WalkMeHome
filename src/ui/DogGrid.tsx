@@ -10,9 +10,17 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Dog } from "../hooks/useGetDogs";
 import React, { useCallback, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { theme } from "../Theme";
 
 type DogGridProps = {
   dogs: Dog[];
+};
+
+const cardStyles = {
+  "&:hover": {
+    transition: "transform 0.2s ease-in-out",
+    transform: "scale(1.1)",
+  },
 };
 
 const DogGrid: React.FC<DogGridProps> = ({ dogs }) => {
@@ -24,16 +32,7 @@ const DogGrid: React.FC<DogGridProps> = ({ dogs }) => {
             return (
               <Grid key={dog.id} xs={2}>
                 <Link to={`/dogs/${dog.id}`}>
-                  <Card
-                    sx={[
-                      {
-                        "&:hover": {
-                          transition: "transform 0.2s ease-in-out",
-                          transform: "scale(1.1)",
-                        },
-                      },
-                    ]}
-                  >
+                  <Card sx={cardStyles}>
                     <CardMedia sx={{ height: 200 }} image={dog.img} />
                     <CardContent>
                       <Typography

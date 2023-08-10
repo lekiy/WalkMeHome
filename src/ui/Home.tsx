@@ -5,7 +5,8 @@ import DogGrid from "./DogGrid";
 import useGetDogs from "../hooks/useGetDogs";
 import BreedSelector from "./BreedSelector";
 import { useCallback, useEffect, useState } from "react";
-import { Button, Toolbar } from "@mui/material";
+import { Box, Button, Container, Toolbar } from "@mui/material";
+import { theme } from "../Theme";
 
 function Home() {
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn", false);
@@ -61,33 +62,40 @@ function Home() {
   return (
     <>
       <Navbar />
-      <Toolbar>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={prevPage}
-          disabled={page === 0}
-        >
-          Back
-        </Button>
+      <Box
+        display={"flex"}
+        flexWrap={"wrap"}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
         <BreedSelector setFilters={handleBreedFilterChange} />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={nextPage}
-          disabled={page >= Math.floor(total / 25)}
-        >
-          Next
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSortOrderToggle}
-        >
-          {" "}
-          Sort{" "}
-        </Button>
-      </Toolbar>
+        <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gap={2}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={prevPage}
+            disabled={page === 0}
+          >
+            Back
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSortOrderToggle}
+          >
+            {" "}
+            Sort{" "}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={nextPage}
+            disabled={page >= Math.floor(total / 25)}
+          >
+            Next
+          </Button>
+        </Box>
+      </Box>
       <DogGrid dogs={data} />
 
       {/* <DogContainer /> */}
