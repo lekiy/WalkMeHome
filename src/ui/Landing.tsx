@@ -3,6 +3,7 @@ import { useLocalStorage } from "usehooks-ts";
 import LoginForm from "./LoginForm";
 import useGetDogBreeds from "../hooks/useGetDogBreeds";
 import DogTriangles from "./DogTriangles";
+import { theme } from "../Theme";
 
 function Landing() {
   const [loggedIn] = useLocalStorage("loggedIn", false);
