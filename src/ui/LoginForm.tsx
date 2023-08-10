@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField } from "@mui/material";
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
@@ -65,25 +65,27 @@ function LoginForm() {
       )}
       {!loggedIn && (
         <form onSubmit={handleFormSubmit}>
-          <TextField
-            name="name"
-            label="Name"
-            variant="outlined"
-            onChange={handleFormChange}
-          >
-            {formData.name}
-          </TextField>
-          <TextField
-            name="email"
-            label="Email"
-            variant="outlined"
-            onChange={handleFormChange}
-          >
-            {formData.email}
-          </TextField>
-          <Button type="submit" color="inherit">
-            Login
-          </Button>
+          <Box display={"flex"} alignItems={"center"} flexDirection={"column"}>
+            <TextField
+              name="name"
+              label="Name"
+              variant="standard"
+              onChange={handleFormChange}
+            >
+              {formData.name}
+            </TextField>
+            <TextField
+              name="email"
+              label="Email"
+              variant="standard"
+              onChange={handleFormChange}
+            >
+              {formData.email}
+            </TextField>
+            <Button type="submit" color="inherit">
+              Login
+            </Button>
+          </Box>
         </form>
       )}
     </>

@@ -1,8 +1,6 @@
-import { Box, Container, Typography } from "@mui/material";
-import { Navigate } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
 import { useLocalStorage } from "usehooks-ts";
 import LoginForm from "./LoginForm";
-import Navbar from "./Navbar";
 import useGetDogBreeds from "../hooks/useGetDogBreeds";
 import DogTriangles from "./DogTriangles";
 
@@ -22,21 +20,25 @@ function Landing() {
 
   return (
     <>
-      <Box sx={{ display: "grid", xs: { gridTemplateColumns: "1fr" } }}>
-        <Box padding={4}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          overflow: "wrap",
+          padding: 2,
+          flexDirection: "column-reverse",
+        }}
+      >
+        <Box padding={2}>
           <Typography variant="h3">Welcome to</Typography>
           <Typography variant="h1">Walk Me Home</Typography>
           <Typography>
-            Let us find you the newest member of your family
+            Let us find you the newest member of your family!
           </Typography>
           <LoginForm />
         </Box>
-        <Box
-          padding={4}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
+        <Box padding={2}>
           <DogTriangles />
         </Box>
       </Box>

@@ -1,19 +1,25 @@
-import { Box } from "@mui/material";
+import { Box, Theme, useMediaQuery } from "@mui/material";
 
 export default function DogTriangles() {
+  const imageScale = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down("md")
+  )
+    ? 0.5
+    : 1;
   const numberOfDogs = 7;
-  const imageSize = 150;
-  const imageGap = 5;
+  const imageSize = 12 * imageScale;
+  const imageGap = imageSize / 20;
   const dogImages = Array.from({ length: numberOfDogs }).map(() => {
-    return `https://placedog.net/${imageSize}/${imageSize}?id=${Math.floor(
-      Math.random() * 100
-    )}`;
+    return `https://placedog.net/${15 * imageSize}/${
+      15 * imageSize
+    }?id=${Math.floor(Math.random() * 100)}`;
   });
 
   return (
     <Box
-      width={`${imageSize * 2.5 + imageGap * 3}px`}
-      height={`${imageSize * 2 + imageGap}px`}
+      width={`${imageSize * 2.5 + imageGap * 3}em`}
+      height={`${imageSize * 2 - imageGap}em`}
+      display={"block"}
     >
       {dogImages.map((dogImage, index) => {
         let clipPath =
@@ -30,7 +36,7 @@ export default function DogTriangles() {
                 translate: `${
                   (imageSize / 2 + imageGap) * index +
                   (index > 2 ? (-imageSize / 2 - imageGap) * 3 : 0)
-                }px ${index > 2 ? imageSize + imageGap : 0}px`,
+                }em ${index > 2 ? imageSize : 0}em`,
               }}
               src={dogImage}
               alt="dog"
