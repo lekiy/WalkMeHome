@@ -3,7 +3,6 @@ import { useLocalStorage } from "usehooks-ts";
 import LoginForm from "./LoginForm";
 import useGetDogBreeds from "../hooks/useGetDogBreeds";
 import DogTriangles from "./DogTriangles";
-import { theme } from "../Theme";
 
 function Landing() {
   const [loggedIn] = useLocalStorage("loggedIn", false);
@@ -28,7 +27,8 @@ function Landing() {
           justifyContent: "space-evenly",
           overflow: "wrap",
           padding: 2,
-          flexDirection: "column-reverse",
+          flexDirection: { xs: "column-reverse", md: "row" },
+          height: "100vh",
         }}
       >
         <Box padding={2}>

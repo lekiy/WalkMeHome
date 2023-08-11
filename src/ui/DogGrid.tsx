@@ -8,9 +8,8 @@ import {
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 import { Dog } from "../hooks/useGetDogs";
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import { theme } from "../Theme";
 
 type DogGridProps = {
   dogs: Dog[];
@@ -28,10 +27,10 @@ const DogGrid: React.FC<DogGridProps> = ({ dogs }) => {
     <Container sx={{ padding: 2 }}>
       <Grid container spacing={2} columns={{ xs: 4, sm: 6, md: 10 }}>
         {dogs &&
-          dogs.map((dog: any) => {
+          dogs.map((dog: Dog) => {
             return (
               <Grid key={dog.id} xs={2}>
-                <Link to={`/dogs/${dog.id}`}>
+                <Link to={`/dogs/${dog.id}`} style={{ textDecoration: "none" }}>
                   <Card sx={cardStyles}>
                     <CardMedia sx={{ height: 200 }} image={dog.img} />
                     <CardContent>

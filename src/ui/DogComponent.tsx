@@ -1,11 +1,8 @@
 import {
   Box,
   Card,
-  CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
-  Fade,
   Grow,
   IconButton,
   Modal,
@@ -14,7 +11,7 @@ import {
 import { Link, useLoaderData } from "react-router-dom";
 import { Dog } from "../hooks/useGetDogs";
 import CloseIcon from "@mui/icons-material/Close";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import useGetLocations from "../hooks/useGetLocations";
 import { useEffect } from "react";
 
@@ -24,7 +21,7 @@ const DogComponent: React.FC = () => {
   const { data, loading, error } = useGetLocations([dogData.zip_code]);
 
   const style = {
-    position: "absolute" as "absolute",
+    position: "absolute" as const,
     top: "50%",
     left: "50%",
 
@@ -80,7 +77,7 @@ const DogComponent: React.FC = () => {
               component="div"
               align="center"
             >
-              {"Age " + dogData.age}
+              {"Age " + String(dogData.age)}
             </Typography>
             {!loading && data && data[0] && (
               <MapContainer
