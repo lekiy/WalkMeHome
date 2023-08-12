@@ -5,7 +5,7 @@ import DogGrid from "./DogGrid";
 import useGetDogs from "../hooks/useGetDogs";
 import BreedSelector from "./BreedSelector";
 import { useCallback, useEffect, useState } from "react";
-import { Box, Button, Container, Toolbar } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { theme } from "../Theme";
 
 function Home() {
@@ -33,7 +33,7 @@ function Home() {
     setSortAscending((sortAscending) => !sortAscending);
   }, []);
 
-  const { data, loading, error, total } = useGetDogs(
+  const { data, total } = useGetDogs(
     breedFilter,
     page,
     sortAscending ? "asc" : "desc"
@@ -62,43 +62,54 @@ function Home() {
   return (
     <>
       <Navbar />
+      {/* I would create a new component for the toolbar but I want to avoid prop drilling. But also don't want to add redux */}
       <Box
         display={"flex"}
-        flexWrap={"wrap"}
         alignItems={"center"}
         justifyContent={"center"}
+        padding={2}
       >
-        <BreedSelector setFilters={handleBreedFilterChange} />
-        <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gap={2}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={prevPage}
-            disabled={page === 0}
-          >
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSortOrderToggle}
-          >
-            {" "}
-            Sort{" "}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={nextPage}
-            disabled={page >= Math.floor(total / 25)}
-          >
-            Next
-          </Button>
+        <Box
+          display={"flex"}
+          flexWrap={"wrap"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          sx={{
+            background: theme.palette.background.paper,
+            maxWidth: "60em",
+            borderRadius: "15px",
+          }}
+        >
+          <BreedSelector setFilters={handleBreedFilterChange} />
+          <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gap={2}>
+            <Button
+              variant="text"
+              color="primary"
+              onClick={prevPage}
+              disabled={page === 0}
+            >
+              Back
+            </Button>
+            <Button
+              variant="text"
+              color="primary"
+              onClick={handleSortOrderToggle}
+            >
+              {" "}
+              Sort{" "}
+            </Button>
+            <Button
+              variant="text"
+              color="primary"
+              onClick={nextPage}
+              disabled={page >= Math.floor(total / 25)}
+            >
+              Next
+            </Button>
+          </Box>
         </Box>
       </Box>
       <DogGrid dogs={data} />
-
-      {/* <DogContainer /> */}
     </>
   );
 }

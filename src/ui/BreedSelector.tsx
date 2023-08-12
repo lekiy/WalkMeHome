@@ -40,6 +40,7 @@ const BreedSelector: React.FC<BreedSelectorProps> = ({ setFilters }) => {
         onChange={handleChange}
         input={<OutlinedInput label="Tag" />}
         renderValue={(selected) => selected.join(", ")}
+        sx={{ border: "none" }}
       >
         {data &&
           data.map((breed: string) => {

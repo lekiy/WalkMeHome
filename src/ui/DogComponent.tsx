@@ -14,6 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import useGetLocations from "../hooks/useGetLocations";
 import { useEffect } from "react";
+import { theme } from "../Theme";
 
 const DogComponent: React.FC = () => {
   const dogData = useLoaderData() as Dog;
@@ -36,7 +37,11 @@ const DogComponent: React.FC = () => {
     <Modal open>
       <Grow in style={style}>
         <Card
-          sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" } }}
+          sx={{
+            display: "flex",
+            overflow: { xs: "scroll", md: "hidden" },
+            flexDirection: { xs: "column", sm: "row" },
+          }}
         >
           <CardMedia
             sx={{
@@ -50,7 +55,7 @@ const DogComponent: React.FC = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              overflow: "scroll",
+
               width: { xs: 250, sm: 250, md: 400 },
               height: { xs: 200, sm: 250, md: 400 },
             }}
@@ -112,7 +117,7 @@ const DogComponent: React.FC = () => {
             margin={1}
           >
             <Link to={`/`}>
-              <IconButton>
+              <IconButton sx={{ background: theme.palette.background.paper }}>
                 <CloseIcon />
               </IconButton>
             </Link>
