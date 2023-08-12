@@ -1,11 +1,11 @@
 import { Box, Typography } from "@mui/material";
-import { useLocalStorage } from "usehooks-ts";
+// import { useLocalStorage } from "usehooks-ts";
 import LoginForm from "./LoginForm";
 import useGetDogBreeds from "../hooks/useGetDogBreeds";
 import DogTriangles from "./DogTriangles";
 
 function Landing() {
-  const [loggedIn] = useLocalStorage("loggedIn", false);
+  // const [loggedIn] = useLocalStorage("loggedIn", false);
   const { data, loading, error } = useGetDogBreeds();
 
   if (!loading && !data) {
@@ -17,6 +17,8 @@ function Landing() {
   // if (loggedIn) {
   //   return <Navigate to="/" />;
   // }
+
+  /* Bug exists with tracking login state due to not actually capturing the login key */
 
   return (
     <>

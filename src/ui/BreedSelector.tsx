@@ -16,7 +16,7 @@ type BreedSelectorProps = {
 };
 
 const BreedSelector: React.FC<BreedSelectorProps> = ({ setFilters }) => {
-  const { data, error, loading } = useGetDogBreeds();
+  const { data } = useGetDogBreeds();
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
 
   const handleChange = useCallback(
@@ -26,7 +26,7 @@ const BreedSelector: React.FC<BreedSelectorProps> = ({ setFilters }) => {
       setSelectedBreeds(filters);
       setFilters(filters);
     },
-    [selectedBreeds]
+    [setFilters]
   );
 
   return (

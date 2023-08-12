@@ -4,8 +4,9 @@ import Landing from "./ui/Landing.tsx";
 import Home from "./ui/Home.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import DogComponent from "./ui/DogComponent.tsx";
-import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "./Theme.tsx";
+import { Dog } from "./hooks/useGetDogs.tsx";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
               body: JSON.stringify([params.dogId]),
             }
           );
-          const data = await response.json();
+          const data = (await response.json()) as Dog[];
           return data[0];
         },
       },

@@ -18,7 +18,7 @@ import { useEffect } from "react";
 const DogComponent: React.FC = () => {
   const dogData = useLoaderData() as Dog;
 
-  const { data, loading, error } = useGetLocations([dogData.zip_code]);
+  const { data, loading } = useGetLocations([dogData.zip_code]);
 
   const style = {
     position: "absolute" as const,

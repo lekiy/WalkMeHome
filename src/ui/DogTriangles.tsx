@@ -22,7 +22,7 @@ export default function DogTriangles() {
       display={"block"}
     >
       {dogImages.map((dogImage, index) => {
-        let clipPath =
+        const clipPath =
           index % 2 == 0
             ? "polygon(50% 0%, 0% 100%, 100% 100%)"
             : "polygon(50% 100%, 0% 0%, 100% 0%)";
