@@ -18,40 +18,45 @@ function LoginForm() {
       [formData, setFormData]
     );
 
-  const handleLogin = async (name: string, email: string) => {
-    const url = "https://frontend-take-home-service.fetch.com/auth/login";
-    const data = {
-      name: name,
-      email: email,
-    };
+  const handleLogin = useCallback(
+    async (name: string, email: string) => {
+      const url = "https://frontend-take-home-service.fetch.com/auth/login";
+      const data = {
+        name: name,
+        email: email,
+      };
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(data),
-    });
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
+      });
 
-    if (response.ok) {
-      const result = await response;
-      setLoggedIn(true);
-      setLoginTime(Date.now());
-      navigate("/");
-    } else {
-      console.error("Login failed");
-    }
-  };
+      if (response.ok) {
+        const result = response;
+        setLoggedIn(true);
+        setLoginTime(Date.now());
+        navigate("/");
+      } else {
+        console.error("Login failed");
+      }
+    },
+    [navigate, setLoggedIn, setLoginTime]
+  );
 
   const handleLogout = useCallback(() => {
     setLoggedIn(false);
   }, [setLoggedIn]);
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
-    async (event) => {
+    (event) => {
       event.preventDefault();
-      handleLogin(formData.name, formData.email);
+      handleLogin(formData.name, formData.email).catch((error) => {
+        console.error(error);
+      });
     },
     [formData, handleLogin]
   );
