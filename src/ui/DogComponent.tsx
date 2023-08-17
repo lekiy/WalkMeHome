@@ -13,13 +13,39 @@ import { Dog } from "../hooks/useGetDogs";
 import CloseIcon from "@mui/icons-material/Close";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import useGetLocations from "../hooks/useGetLocations";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { theme } from "../Theme";
+import FavoriteButton from "./FavoriteButton";
 
-const DogComponent: React.FC = () => {
+type DogComponentProps = {
+  favoriteDogs: string[];
+  addFavoriteDog: (dogId: string) => void;
+  removeFavoriteDog: (dogId: string) => void;
+};
+
+const DogComponent: React.FC<DogComponentProps> = ({
+  favoriteDogs,
+  addFavoriteDog,
+  removeFavoriteDog,
+}) => {
   const dogData = useLoaderData() as Dog;
+  const [isFavorite, setIsFavorite] = useState<boolean>(() => {
+    return favoriteDogs.includes(dogData.id);
+  });
 
   const { data, loading } = useGetLocations([dogData.zip_code]);
+
+  const handleSetFavorite = useCallback(() => {
+    if (!isFavorite) {
+      addFavoriteDog(dogData.id);
+      setIsFavorite(true);
+    } else {
+      removeFavoriteDog(dogData.id);
+      setIsFavorite(false);
+    }
+
+    console.log(favoriteDogs);
+  }, [addFavoriteDog, dogData.id, favoriteDogs, isFavorite, removeFavoriteDog]);
 
   const style = {
     position: "absolute" as const,
@@ -39,7 +65,7 @@ const DogComponent: React.FC = () => {
         <Card
           sx={{
             display: "flex",
-            overflow: { xs: "scroll", md: "hidden" },
+
             flexDirection: { xs: "column", sm: "row" },
           }}
         >
@@ -55,6 +81,7 @@ const DogComponent: React.FC = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
+              overflow: { xs: "scroll", md: "hidden" },
 
               width: { xs: 250, sm: 250, md: 400 },
               height: { xs: 200, sm: 250, md: 400 },
@@ -110,10 +137,11 @@ const DogComponent: React.FC = () => {
             )}
           </CardContent>
           <Box
+            display={"flex"}
+            flexDirection={"column"}
             position={"absolute"}
             right={0}
             borderRadius={"100%"}
-            bgcolor={"white"}
             margin={1}
           >
             <Link to={`/`}>
@@ -121,6 +149,10 @@ const DogComponent: React.FC = () => {
                 <CloseIcon />
               </IconButton>
             </Link>
+            <FavoriteButton
+              isFavorite={isFavorite}
+              onClick={handleSetFavorite}
+            />
           </Box>
         </Card>
       </Grow>
