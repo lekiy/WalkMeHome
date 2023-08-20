@@ -10,9 +10,9 @@ export default function DogTriangles() {
   const imageSize = 12 * imageScale;
   const imageGap = imageSize / 20;
   const dogImages = Array.from({ length: numberOfDogs }).map(() => {
-    return `https://placedog.net/${15 * imageSize}/${
-      15 * imageSize
-    }?id=${Math.floor(Math.random() * 100)}`;
+    return `https://placedog.net/${15 * imageSize}/${15 * imageSize}?id=${
+      Math.floor(Math.random() * 200) + 1
+    }`;
   });
 
   return (
@@ -20,6 +20,7 @@ export default function DogTriangles() {
       width={`${imageSize * 2.5 + imageGap * 3}em`}
       height={`${imageSize * 2 - imageGap}em`}
       display={"block"}
+      position={"relative"}
     >
       {dogImages.map((dogImage, index) => {
         const clipPath =
@@ -27,21 +28,20 @@ export default function DogTriangles() {
             ? "polygon(50% 0%, 0% 100%, 100% 100%)"
             : "polygon(50% 100%, 0% 0%, 100% 0%)";
         return (
-          <>
-            <Box
-              component="img"
-              sx={{
-                position: "absolute",
-                clipPath: clipPath,
-                translate: `${
-                  (imageSize / 2 + imageGap) * index +
-                  (index > 2 ? (-imageSize / 2 - imageGap) * 3 : 0)
-                }em ${index > 2 ? imageSize : 0}em`,
-              }}
-              src={dogImage}
-              alt="dog"
-            />
-          </>
+          <Box
+            key={dogImage}
+            component="img"
+            sx={{
+              position: "absolute",
+              clipPath: clipPath,
+              translate: `${
+                (imageSize / 2 + imageGap) * index +
+                (index > 2 ? (-imageSize / 2 - imageGap) * 3 : 0)
+              }em ${index > 2 ? imageSize : 0}em`,
+            }}
+            src={dogImage}
+            alt="dog"
+          />
         );
       })}
     </Box>

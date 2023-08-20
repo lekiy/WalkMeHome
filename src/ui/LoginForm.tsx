@@ -70,7 +70,14 @@ function LoginForm() {
       )}
       {!loggedIn && (
         <form onSubmit={handleFormSubmit}>
-          <Box display={"flex"} alignItems={"center"} flexDirection={"column"}>
+          <Box
+            display={"flex"}
+            alignItems={{ xs: "center", md: "baseline" }}
+            flexDirection={{ xs: "column", md: "row" }}
+            justifyContent={{ xs: "center", md: "space-evenly" }}
+            padding={2}
+            gap={2}
+          >
             <TextField
               name="name"
               label="Name"

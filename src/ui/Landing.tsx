@@ -1,25 +1,9 @@
 import { Box, Typography } from "@mui/material";
-// import { useLocalStorage } from "usehooks-ts";
 import LoginForm from "./LoginForm";
-import useGetDogBreeds from "../hooks/useGetDogBreeds";
 import DogTriangles from "./DogTriangles";
+import { theme } from "../Theme";
 
 function Landing() {
-  // const [loggedIn] = useLocalStorage("loggedIn", false);
-  const { data, loading, error } = useGetDogBreeds();
-
-  if (!loading && !data) {
-    console.error(error);
-  } else {
-    console.log(data);
-  }
-
-  // if (loggedIn) {
-  //   return <Navigate to="/" />;
-  // }
-
-  /* Bug exists with tracking login state due to not actually capturing the login key */
-
   return (
     <>
       <Box
@@ -27,13 +11,13 @@ function Landing() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-evenly",
-          overflow: "wrap",
+          overflow: "scroll",
           padding: 2,
           flexDirection: { xs: "column-reverse", md: "row" },
-          height: "100vh",
+          height: { md: "100vh" },
         }}
       >
-        <Box padding={2}>
+        <Box padding={2} color={theme.palette.text.secondary}>
           <Typography variant="h3">Welcome to</Typography>
           <Typography variant="h1">Walk Me Home</Typography>
           <Typography>
