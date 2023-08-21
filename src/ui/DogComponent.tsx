@@ -144,7 +144,7 @@ const DogComponent: React.FC<DogComponentProps> = ({
             borderRadius={"100%"}
             margin={1}
           >
-            <Link to={`/`}>
+            <Link to={`/dogs`}>
               <IconButton sx={{ background: theme.palette.background.paper }}>
                 <CloseIcon />
               </IconButton>

@@ -39,7 +39,7 @@ function LoginForm() {
         const result = response;
         setLoggedIn(true);
         setLoginTime(Date.now());
-        navigate("/");
+        navigate("/dogs");
       } else {
         console.error("Login failed");
       }
@@ -49,6 +49,7 @@ function LoginForm() {
 
   const handleLogout = useCallback(() => {
     setLoggedIn(false);
+    navigate("/landing");
   }, [setLoggedIn]);
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(

@@ -7,6 +7,8 @@ import DogComponent from "./ui/DogComponent.tsx";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "./Theme.tsx";
 import { Dog } from "./hooks/useGetDogs.tsx";
+import MatchPage from "./ui/MatchPage.tsx";
+import Navbar from "./ui/Navbar.tsx";
 
 function Main() {
   const [favoriteDogs, setFavoriteDogs] = useState<string[]>([]);
@@ -28,33 +30,40 @@ function Main() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <Navbar />,
       children: [
         {
-          path: "dogs/:dogId",
-          element: (
-            <DogComponent
-              favoriteDogs={favoriteDogs}
-              addFavoriteDog={handleAddFavoriteDog}
-              removeFavoriteDog={handleRemoveFavoriteDog}
-            />
-          ),
-          loader: async ({ params }) => {
-            const response = await fetch(
-              "https://frontend-take-home-service.fetch.com/dogs",
-              {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify([params.dogId]),
-              }
-            );
-            const data = (await response.json()) as Dog[];
-            return data[0];
-          },
+          path: "dogs",
+          element: <Home />,
+          children: [
+            {
+              path: ":dogId",
+              element: (
+                <DogComponent
+                  favoriteDogs={favoriteDogs}
+                  addFavoriteDog={handleAddFavoriteDog}
+                  removeFavoriteDog={handleRemoveFavoriteDog}
+                />
+              ),
+              loader: async ({ params }) => {
+                const response = await fetch(
+                  "https://frontend-take-home-service.fetch.com/dogs",
+                  {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify([params.dogId]),
+                  }
+                );
+                const data = (await response.json()) as Dog[];
+                return data[0];
+              },
+            },
+          ],
         },
+        { path: "match", element: <MatchPage /> },
       ],
     },
     {

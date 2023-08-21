@@ -1,16 +1,11 @@
-import { Navigate } from "react-router-dom";
-import { useLocalStorage } from "usehooks-ts";
 import DogGrid from "./DogGrid";
 import useGetDogs from "../hooks/useGetDogs";
 import BreedSelector from "./BreedSelector";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { theme } from "../Theme";
 
-function Home() {
-  const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn", false);
-  const [loginTime] = useLocalStorage("loginTime", 0);
-
+function SearchDogs() {
   const [breedFilter, setBreedFilter] = useState<string[]>([]);
   const [page, setPage] = useState<number>(0);
   const [sortAscending, setSortAscending] = useState<boolean>(true);
@@ -38,27 +33,12 @@ function Home() {
     sortAscending ? "asc" : "desc"
   );
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (loginTime + 6000000 < Date.now()) {
-        // 6000000ms = 1 hour
-        setLoggedIn(false);
-      }
-      console.log("checking login");
-    }, 600000); // 600000ms = 10 minutes
-
-    return () => clearInterval(intervalId);
-  }, [loginTime, setLoggedIn]);
-
-  if (!loggedIn) return <Navigate to="/landing" />;
-
   if (!data) {
     return null;
   }
 
   return (
     <>
-      {/* I would create a new component for the toolbar but I want to avoid prop drilling. But also don't want to add redux */}
       <Box
         display={"flex"}
         alignItems={"center"}
@@ -110,4 +90,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default SearchDogs;
