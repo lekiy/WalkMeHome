@@ -28,7 +28,7 @@ function useGetDogs(
 
   const baseUrl = "https://frontend-take-home-service.fetch.com/dogs";
 
-  const pageGroupString = "?size=25&from=" + pageIndex * 25; // multiply the index by 25 to for each page
+  const pageGroupString = "?size=25&from=" + String(pageIndex * 25); // multiply the index by 25 to for each page
 
   const filterBreedsString =
     filterBreeds?.length > 0 ? "&breeds=" + filterBreeds.join("&breeds=") : "";
@@ -71,7 +71,15 @@ function useGetDogs(
     };
 
     fetchData();
-  }, [baseUrl, filterBreedsString, pageIndex, sortOrder]);
+  }, [
+    baseUrl,
+    error,
+    filterBreedsString,
+    pageGroupString,
+    pageIndex,
+    sortOrder,
+    sortOrderString,
+  ]);
 
   return { data, loading, error, total };
 }

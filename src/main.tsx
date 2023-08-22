@@ -63,7 +63,7 @@ function Main() {
             },
           ],
         },
-        { path: "match", element: <MatchPage /> },
+        { path: "match", element: <MatchPage favoriteDogs={favoriteDogs} /> },
       ],
     },
     {

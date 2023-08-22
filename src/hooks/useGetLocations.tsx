@@ -44,7 +44,7 @@ function useGetLocations(zipCodes: string[]): GetLocations<Location[]> {
     };
 
     fetchData();
-  }, [baseUrl]);
+  }, [baseUrl, error, zipCodes]);
 
   return { data, loading, error };
 }
