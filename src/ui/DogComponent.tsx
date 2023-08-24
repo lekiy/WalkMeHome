@@ -12,8 +12,8 @@ import { Link, useLoaderData } from "react-router-dom";
 import { Dog } from "../hooks/useGetDogs";
 import CloseIcon from "@mui/icons-material/Close";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import useGetLocations from "../hooks/useGetLocations";
-import { useCallback, useEffect, useState } from "react";
+import useGetLocation from "../hooks/useGetLocation";
+import { useCallback, useState } from "react";
 import { theme } from "../Theme";
 import FavoriteButton from "./FavoriteButton";
 
@@ -33,7 +33,8 @@ const DogComponent: React.FC<DogComponentProps> = ({
     return favoriteDogs.includes(dogData.id);
   });
 
-  const { data, loading } = useGetLocations([dogData.zip_code]);
+  const { data, loading } = useGetLocation(dogData.zip_code);
+  console.log("render");
 
   const handleSetFavorite = useCallback(() => {
     if (!isFavorite) {
@@ -43,9 +44,7 @@ const DogComponent: React.FC<DogComponentProps> = ({
       removeFavoriteDog(dogData.id);
       setIsFavorite(false);
     }
-
-    console.log(favoriteDogs);
-  }, [addFavoriteDog, dogData.id, favoriteDogs, isFavorite, removeFavoriteDog]);
+  }, [addFavoriteDog, dogData.id, isFavorite, removeFavoriteDog]);
 
   const style = {
     position: "absolute" as const,
@@ -54,10 +53,6 @@ const DogComponent: React.FC<DogComponentProps> = ({
 
     transform: "translate(-50%, -50%)",
   };
-
-  useEffect(() => {
-    if (data && data[0]) console.log(data[0]);
-  }, [data]);
 
   return (
     <Modal open>

@@ -15,7 +15,7 @@ interface GetLocations<Location> {
   error: Error | null;
 }
 
-function useGetLocations(zipCodes: string[]): GetLocations<Location[]> {
+function useGetLocation(zipCodes: string): GetLocations<Location[]> {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,7 +30,7 @@ function useGetLocations(zipCodes: string[]): GetLocations<Location[]> {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(zipCodes),
+        body: JSON.stringify([zipCodes]),
       });
       if (!response.ok) {
         setError(error);
@@ -43,10 +43,10 @@ function useGetLocations(zipCodes: string[]): GetLocations<Location[]> {
       }
     };
 
-    fetchData();
+    fetchData().catch((error: Error) => error);
   }, [baseUrl, error, zipCodes]);
 
   return { data, loading, error };
 }
 
-export default useGetLocations;
+export default useGetLocation;
