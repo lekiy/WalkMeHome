@@ -34,7 +34,6 @@ const DogComponent: React.FC<DogComponentProps> = ({
   });
 
   const { data, loading } = useGetLocation(dogData.zip_code);
-  console.log("render");
 
   const handleSetFavorite = useCallback(() => {
     if (!isFavorite) {

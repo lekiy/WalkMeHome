@@ -63,7 +63,37 @@ function Main() {
             },
           ],
         },
-        { path: "match", element: <MatchPage favoriteDogs={favoriteDogs} /> },
+        {
+          path: "match",
+          element: <MatchPage favoriteDogs={favoriteDogs} />,
+          children: [
+            {
+              path: ":dogId",
+              element: (
+                <DogComponent
+                  favoriteDogs={favoriteDogs}
+                  addFavoriteDog={handleAddFavoriteDog}
+                  removeFavoriteDog={handleRemoveFavoriteDog}
+                />
+              ),
+              loader: async ({ params }) => {
+                const response = await fetch(
+                  "https://frontend-take-home-service.fetch.com/dogs",
+                  {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify([params.dogId]),
+                  }
+                );
+                const data = (await response.json()) as Dog[];
+                return data[0];
+              },
+            },
+          ],
+        },
       ],
     },
     {

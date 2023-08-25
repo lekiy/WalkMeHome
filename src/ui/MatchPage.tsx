@@ -1,6 +1,7 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography, Zoom } from "@mui/material";
 import { theme } from "../Theme";
 import useGetDogMatch from "../hooks/useGetDogMatch";
+import { Navigate, Outlet } from "react-router-dom";
 
 type MatchPageProps = {
   favoriteDogs: string[];
@@ -57,17 +58,15 @@ const MatchPage: React.FC<MatchPageProps> = ({ favoriteDogs }) => {
   }
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        width: "100vw",
-      }}
-    >
-      <Typography>{data.match}</Typography>
-    </Box>
+    <>
+      <Navigate
+        to={`/match/${data.match}`}
+        // style={{ textDecoration: "none" }}
+      ></Navigate>
+      {/* <Zoom in={true}> */}
+      <Outlet></Outlet>
+      {/* </Zoom> */}
+    </>
   );
 };
 
