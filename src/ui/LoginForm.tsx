@@ -2,6 +2,7 @@ import { Box, Button, Grid, TextField } from "@mui/material";
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
+import { theme } from "../Theme";
 
 function LoginForm() {
   const [formData, setFormData] = useState({ name: "", email: "" });
@@ -84,6 +85,13 @@ function LoginForm() {
               label="Name"
               variant="standard"
               onChange={handleFormChange}
+              InputProps={{
+                sx: {
+                  "& input": {
+                    color: theme.palette.text.secondary,
+                  },
+                },
+              }}
             >
               {formData.name}
             </TextField>
@@ -92,6 +100,13 @@ function LoginForm() {
               label="Email"
               variant="standard"
               onChange={handleFormChange}
+              InputProps={{
+                sx: {
+                  "& input": {
+                    color: theme.palette.text.secondary,
+                  },
+                },
+              }}
             >
               {formData.email}
             </TextField>
