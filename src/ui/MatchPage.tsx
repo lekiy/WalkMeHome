@@ -41,7 +41,7 @@ const MatchPage: React.FC<MatchPageProps> = ({ favoriteDogs }) => {
     );
   }
 
-  if (!data && error) {
+  if (error) {
     return (
       <Box
         sx={{
@@ -57,17 +57,7 @@ const MatchPage: React.FC<MatchPageProps> = ({ favoriteDogs }) => {
     );
   }
 
-  return (
-    <>
-      <Navigate
-        to={`/match/${data.match}`}
-        // style={{ textDecoration: "none" }}
-      ></Navigate>
-      {/* <Zoom in={true}> */}
-      <Outlet></Outlet>
-      {/* </Zoom> */}
-    </>
-  );
+  return <>{data?.name}</>;
 };
 
 export default MatchPage;
